@@ -21,10 +21,18 @@ from Polyline_Bounding_Boxes.wu import points as wu_points
 ################################################################
 # Load 24 hour data from saved file and generate dynamic heatmap
 ################################################################
+def getPolyLine(buildingPoints):
+	correctedPoints = [(t[1], t[0]) for t in buildingPoints]
+	return correctedPoints
+
 with open ('outfileUpdated', 'rb') as fp:
 	finalData = pickle.load(fp)
 
 timeNames = []
+allBuildingPolygonPoints = [firestone_points, forbes_points, lewis_points, rockey_mathey_points, whitman_points, wilcox_points, wu_points]
+
+# tiles="Mapbox Control Room"
+m = folium.Map(location=[40.347485, -74.658704], zoom_start=17)
 
 for stamp in timestamps:
 	unixUTCStamp = int(stamp[14:])
