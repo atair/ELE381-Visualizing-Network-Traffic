@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from Raw_Timestamp_Data.saturdayTimestamps import timestamps
+from Raw_Timestamp_Data.mondayTimestamps import timestamps
 from datetime import datetime, timedelta
 import os
 
@@ -14,16 +14,17 @@ for stamp in timestamps:
 	timeNames.append(estTimeStamp.strftime('%I:%M %p'))
 	
 
-data = np.load(os.path.join('Processed_Timestamp_Data', 'saturdayBuildingData.npy'))
+data = np.load(os.path.join('Processed_Timestamp_Data', 'mondayBuildingData.npy'))
 
-names = ["firestoneCount", "forbesCount", "friendCount", "lewisCount", "rockyCount", "whitmanCount", "wuCount"]
+names = ["Firestone Library", "Forbes", "Friend Center", "Lewis Library", "Rockey/Mathey Dhalls", "Whitman Dhall", "Wu/Wilcox Dhalls"]
 
 f, ax = plt.subplots()
 ax.tick_params(axis='x', which='both', labelsize=22)
 
 l = list(range(1,len(timeNames)+1))
 
-for i in range(data.shape[1]):
+# for i in range(data.shape[1]):
+for i in [0,2,3,4,5,6]:
 	ax.plot(l, list(data[:,i]), label=names[i], linewidth=4)
 
 newl = l[0::10]
@@ -33,7 +34,7 @@ xticks = [timeNames[i] for i in newlToIndices]
 ax.set_xticklabels(xticks, rotation=70)
 
 plt.xlabel('Time')
-plt.ylabel('Total Counts')
-plt.title('Sat. 4/27 6:00AM - Sun. 4/28 5:50AM')
+plt.ylabel('Total Router Connection Count')
+plt.title('Mon. 4/29 6:00AM - Tue. 4/30 6:00AM')
 plt.legend()
 plt.show()

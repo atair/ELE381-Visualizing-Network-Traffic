@@ -6,7 +6,7 @@ from firebase_admin import credentials
 from firebase_admin import firestore
 import numpy as np
 import os
-from Raw_Timestamp_Data.saturdayTimestamps import timestamps
+from Raw_Timestamp_Data.mondayTimestamps import timestamps
 
 upDirectory = '.'
 if os.name == 'nt':
@@ -73,5 +73,5 @@ for t in timestamps:
 	
 	allBuildingCounts.append(buildingCounts)
 
-np.save(os.path.join('Processed_Timestamp_Data', 'saturdayBuildingData.npy'), allBuildingCounts)
+np.save(os.path.join('Processed_Timestamp_Data', 'mondayBuildingData.npy'), allBuildingCounts)
     
