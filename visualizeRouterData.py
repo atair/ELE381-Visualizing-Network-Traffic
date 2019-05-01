@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from Raw_Timestamp_Data.sundayTimestamps import timestamps
+from Raw_Timestamp_Data.saturdayTimestamps import timestamps
 from datetime import datetime, timedelta
 import os
 
@@ -14,7 +14,7 @@ for stamp in timestamps:
 	timeNames.append(estTimeStamp.strftime('%I:%M %p'))
 	
 
-data = np.load(os.path.join('Processed_Timestamp_Data', 'sundayBuildingData.npy'))
+data = np.load(os.path.join('Processed_Timestamp_Data', 'saturdayBuildingData.npy'))
 
 names = ["firestoneCount", "forbesCount", "friendCount", "lewisCount", "rockyCount", "whitmanCount", "wuCount"]
 
@@ -34,6 +34,6 @@ ax.set_xticklabels(xticks, rotation=70)
 
 plt.xlabel('Time')
 plt.ylabel('Total Counts')
-plt.title('Sun. 4/28 5:30AM - Mon. 4/29 6:00AM')
+plt.title('Sat. 4/27 6:00AM - Sun. 4/28 5:50AM')
 plt.legend()
 plt.show()
