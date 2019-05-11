@@ -73,13 +73,13 @@ for doc in docs:
 			diffMatrix = []
 			for building in prevBuildingToMAC.keys():
 				# Get MAC adresses that are in prev building but not in curr building
-				
 				travelledMac_prev = diff(prevBuildingToMAC[building], currBuildingToMAC[building])
-				p1 = findMacAdresses(currBuildingToMAC, travelledMac_prev, True)
+				p1 = findMacAdresses(currBuildingToMAC, travelledMac_prev, False)
+
 				# Get MAC adresses that are in curr building but not in prev building
 				travelledMac_curr = diff(currBuildingToMAC[building], prevBuildingToMAC[building])
 				
-				p2 = findMacAdresses(prevBuildingToMAC, travelledMac_curr, True)
+				p2 = findMacAdresses(prevBuildingToMAC, travelledMac_curr, False)
 
 				s = [sum(x) for x in zip(p1, p2)]
 				diffMatrix.append(s)
