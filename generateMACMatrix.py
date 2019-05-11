@@ -22,6 +22,7 @@ def findMacAdresses(d, adresses, ran):
 	for i, key in enumerate(d.keys()):
 		for mac in adresses:
 			if mac in d[key]:
+				adresses.remove(mac)
 				l[i] += 1
 
 	if ran:
@@ -68,6 +69,7 @@ for doc in docs:
 					macAdresses.append(list(pair.values()))
 		currBuildingToMAC[buildings[i]] = list(itertools.chain.from_iterable(macAdresses))
 	
+	# K is step size for timestamps
 	if k % 5 == 0 and k != 0:
 		if prevBuildingToMAC:
 			diffMatrix = []
@@ -76,19 +78,25 @@ for doc in docs:
 				travelledMac_prev = diff(prevBuildingToMAC[building], currBuildingToMAC[building])
 				p1 = findMacAdresses(currBuildingToMAC, travelledMac_prev, False)
 
+				diffMatrix.append(p1)
+
+			# Find buildings that new devices were prev in
+			for j, building in enumerate(currBuildingToMAC.keys()):
 				# Get MAC adresses that are in curr building but not in prev building
 				travelledMac_curr = diff(currBuildingToMAC[building], prevBuildingToMAC[building])
-				
 				p2 = findMacAdresses(prevBuildingToMAC, travelledMac_curr, False)
+				# Indices in this array are prev buildings
+				for i in range(len(p2)):
+					if p2[i]:
+						diffMatrix[i][j] += p2[i]
 
-				s = [sum(x) for x in zip(p1, p2)]
-				diffMatrix.append(s)
 			listOfDifferences.append(diffMatrix)
 	k += 1
 
+#print(listOfDifferences)
 listOfDifferences = np.array(listOfDifferences)
-print(listOfDifferences)
-np.save('listOfMACDifferences_5_10_19_RANDOM.npy', listOfDifferences)
+#print(listOfDifferences)
+np.save('listOfMACDifferences_5_10_19.npy', listOfDifferences)
 
 
 
