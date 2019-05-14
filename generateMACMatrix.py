@@ -9,6 +9,9 @@ import sys
 import copy
 
 
+buildings = ["Dillon-Gym-0067", "Wu-Wilcox-0160", "Frist-Campus-Center-0605", "Forbes-College-Main-0148", "Firestone-0069", "Madison-Hall-0036",
+"Lewis-Library-0630", "Friend-Center-0616", "Whitman-College-0668"]
+
 def diff(first, second):
     second = set(second)
     return [item for item in first if item not in second]
@@ -19,11 +22,11 @@ def findMacAdresses(d, adresses, ran):
 	if not adresses:
 		return l
 
-	for i, key in enumerate(d.keys()):
+	for key in d.keys():
 		for mac in adresses:
 			if mac in d[key]:
 				adresses.remove(mac)
-				l[i] += 1
+				l[buildings.index(key)] += 1
 
 	if ran:
 		return random.sample(range(15), 9)
@@ -35,7 +38,7 @@ def findMacAdresses(d, adresses, ran):
 
 d = np.load('buildingToRouterDic.npy')
 buildingToRouter = d.item()
-buildings = list(buildingToRouter.keys())
+
 
 
 
@@ -62,11 +65,11 @@ for doc in docs:
 		d = doc.to_dict()
 		for i in range(len(buildings)):
 			macAdresses = []
-			for r in buildingToRouter[buildings[i]]:
-				a = d.get(r)
-				if a != None:
-					for pair in a:
-						macAdresses.append(list(pair.values()))
+			for router in buildingToRouter[buildings[i]]:
+				macList = d.get(router)
+				if macList != None:
+					for mac in macList:
+						macAdresses.append(list(mac.values()))
 			currBuildingToMAC[buildings[i]] = list(itertools.chain.from_iterable(macAdresses))
 			
 
@@ -75,6 +78,7 @@ for doc in docs:
 			if prevBuildingToMAC:
 				diffMatrix = []
 				for building in prevBuildingToMAC.keys():
+
 					#print(building)
 					# Get MAC adresses that are in prev building but not in curr building
 					travelledMac_prev = diff(prevBuildingToMAC[building], currBuildingToMAC[building])
