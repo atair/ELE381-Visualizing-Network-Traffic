@@ -48,7 +48,7 @@ firebase_admin.initialize_app(cred)
 
 db = firestore.client()
 
-collectionName = '2019-05-10_MAC'
+collectionName = '2019-05-13_MAC'
 docs = db.collection(collectionName).get()
 
 prevBuildingToMAC = {}
@@ -68,12 +68,14 @@ for doc in docs:
 				for pair in a:
 					macAdresses.append(list(pair.values()))
 		currBuildingToMAC[buildings[i]] = list(itertools.chain.from_iterable(macAdresses))
-	
+		
+
 	# K is step size for timestamps
 	if k % 5 == 0 and k != 0:
 		if prevBuildingToMAC:
 			diffMatrix = []
 			for building in prevBuildingToMAC.keys():
+				print(building)
 				# Get MAC adresses that are in prev building but not in curr building
 				travelledMac_prev = diff(prevBuildingToMAC[building], currBuildingToMAC[building])
 				p1 = findMacAdresses(currBuildingToMAC, travelledMac_prev, False)
@@ -82,6 +84,7 @@ for doc in docs:
 
 			# Find buildings that new devices were prev in
 			for j, building in enumerate(currBuildingToMAC.keys()):
+				print(building)
 				# Get MAC adresses that are in curr building but not in prev building
 				travelledMac_curr = diff(currBuildingToMAC[building], prevBuildingToMAC[building])
 				p2 = findMacAdresses(prevBuildingToMAC, travelledMac_curr, False)
@@ -93,10 +96,10 @@ for doc in docs:
 			listOfDifferences.append(diffMatrix)
 	k += 1
 
-#print(listOfDifferences)
+print(listOfDifferences)
 listOfDifferences = np.array(listOfDifferences)
 #print(listOfDifferences)
-np.save('listOfMACDifferences_5_10_19.npy', listOfDifferences)
+#np.save('listOfMACDifferences_5_10_19.npy', listOfDifferences)
 
 
 
