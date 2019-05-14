@@ -77,7 +77,8 @@ for doc in docs:
 		if k % 3 == 0:
 			if prevBuildingToMAC:
 				diffMatrix = []
-				for building in prevBuildingToMAC.keys():
+				for building in buildings:
+					
 
 					#print(building)
 					# Get MAC adresses that are in prev building but not in curr building
@@ -87,7 +88,7 @@ for doc in docs:
 					diffMatrix.append(p1)
 
 				# Find buildings that new devices were prev in
-				for j, building in enumerate(currBuildingToMAC.keys()):
+				for j, building in enumerate(buildings):
 					#print(building)
 					# Get MAC adresses that are in curr building but not in prev building
 					travelledMac_curr = diff(currBuildingToMAC[building], prevBuildingToMAC[building])
